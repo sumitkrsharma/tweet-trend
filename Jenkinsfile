@@ -4,6 +4,7 @@ pipeline {
             label 'maven'
         }
     }
+<<<<<<< HEAD
     environment {
 <<<<<<< HEAD
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
@@ -11,6 +12,11 @@ pipeline {
 =======
     	PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
 	}
+=======
+environment {
+    PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+}
+>>>>>>> a12386a (added Jenkinsfile to stage branch)
 
 >>>>>>> 3876734 (updated indentation jenkinsfile)
     stages {
