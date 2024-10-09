@@ -5,8 +5,14 @@ pipeline {
         }
     }
     environment {
+<<<<<<< HEAD
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
     }
+=======
+    	PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+	}
+
+>>>>>>> 3876734 (updated indentation jenkinsfile)
     stages {
         stage ("Maven Build") {
             steps {
