@@ -13,5 +13,15 @@ pipeline {
                 sh 'mvn clean deploy'
             }
         }
+        stage ("SonarQube analysis") {
+            environment {
+                scannerHome = tool 'sonar-scanner'
+            }
+            steps {
+                withSonarQubeEnv ('sonar-server') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
     }
 }
