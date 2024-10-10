@@ -24,10 +24,10 @@ pipeline {
         }
         stage ("SonarQube analysis") {
             environment {
-                scannerHome = tool 'sonar-scanner'
+                scannerHome = tool 'tweet-trend-sonar-scanner'
             }
             steps {
-                withSonarQubeEnv ('sonar-server') {
+                withSonarQubeEnv ('tweet-trend-sonar-server') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
