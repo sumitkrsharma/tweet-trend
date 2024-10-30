@@ -30,7 +30,7 @@ pipeline {
                 withSonarQubeEnv ('tweet-trend-sonar-server') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
-                sleep 30
+                sleep 20
             }
         }
         stage ("Quality Gate") {
