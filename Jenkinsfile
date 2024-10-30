@@ -4,26 +4,45 @@ pipeline {
             label 'maven'
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     environment {
-    	PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-	}
-=======
-environment {
-    PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-}
->>>>>>> a12386a (added Jenkinsfile to stage branch)
-=======
-    environment {
-    	PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-	}
->>>>>>> 9142f86 (updated indentation jenkinsfile)
-
+        PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+    }
     stages {
-        stage ("build") {
+        stage ("Maven Build") {
             steps {
-                sh 'mvn clean deploy'
+                echo "----------- Build Started -----------"
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                echo "----------- Build Completed -----------"
+            }
+        }
+        stage ("Maven Test") {
+            steps {
+                echo "----------- Unit Test Started -----------"
+                sh 'mvn surefire-report:report'
+                echo "----------- Unit Test Completed -----------"
+            }
+        }
+        stage ("SonarQube Analysis") {
+            environment {
+                scannerHome = tool 'tweet-trend-sonar-scanner'
+            }
+            steps {
+                withSonarQubeEnv ('tweet-trend-sonar-server') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+                sleep 30
+            }
+        }
+        stage ("Quality Gate") {
+            steps {
+                script {
+                    timeout (time: 10, unit: 'MINUTES') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg:status}"
+                        }
+                    }
+                }
             }
         }
     }
