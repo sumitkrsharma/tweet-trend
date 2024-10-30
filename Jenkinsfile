@@ -4,9 +4,8 @@ pipeline {
             label 'maven'
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     environment {
+<<<<<<< HEAD
 <<<<<<< HEAD
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
     }
@@ -25,6 +24,10 @@ environment {
 >>>>>>> 9142f86 (updated indentation jenkinsfile)
 
 >>>>>>> 3876734 (updated indentation jenkinsfile)
+=======
+        PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+    }
+>>>>>>> cdf79f1 (merge with dev branch)
     stages {
         stage ("Maven Build") {
             steps {
