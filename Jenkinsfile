@@ -1,3 +1,4 @@
+def registry = 'http://13.126.51.20:8082'
 pipeline {
     agent {
         node {
@@ -45,7 +46,6 @@ pipeline {
                 }
             }
         }
-        def registry = 'http://13.126.51.20:8082'
         stage ("Jar Publish") {
             steps {
                 script {
