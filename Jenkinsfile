@@ -1,4 +1,3 @@
-def registry = 'http://13.126.51.20:8082'
 pipeline {
     agent {
         node {
@@ -49,27 +48,32 @@ pipeline {
                 }
             }
         }
-        stage ("Publish to Nexus") {
+        stage ("Upload to Nexus") {
             steps {
-                    echo "----------- Jar Publish Started -------------"
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: "${NEXUS_URL}",
-                        groupId: 'com/valaxy/demo-workshop/',
-                        version: '1.0.0',
-                        repository: "${NEXUS_REPO}",
-                        credentialsId: "${CRENDENTIAL_ID}",
-                        artifats: [
-                            [
-                                artifactId: 'demo-workshop',
-                                classifier: '',
-                                file: 'jarstaging/(*)',
-                                type: 'jar'
-                            ]
+                echo "----------- Jar Publish Started -------------"
+                script {
+                    // Define artifact details
+                    def artifactPath = 'jarstaging/(*)'
+                    def artifactVersion = '1.0.0'
+                    def artifactGroup = 'com/valaxy/demo-workshop/'
+                    def artifactName = 'demo-workshop'
+
+                    // upload artifacts to nexus
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: artifactName,
+                            classifier: '',
+                            file: artifactPath,
+                            type: 'jar'
                         ]
-                    )
-                    echo "----------- Jar Publish Complete -----------"
+                    ],
+                    credentialsId: CRENDENTIAL_ID,
+                    groupId: artifactGroup,
+                    nexusUrl: NEXUS_URL,
+                    nexusRepositoryId: NEXUS_REPO,
+                    version: artifactVersion
+                }    
+                echo "----------- Jar Publish Complete -----------"
             }
         }
     }
