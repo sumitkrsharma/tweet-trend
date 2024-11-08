@@ -6,6 +6,9 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+        NEXUS_URL = "http://3.110.157.207:8081"
+        NEXUS_MAVEN_REPO = "tweet-trend-maven"
+        CRENDENTIAL_ID = "nexus-credentials"
     }
     stages {
         stage ("Maven Build") {
@@ -43,6 +46,39 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage ("Verify Build Artifact") {
+            steps {
+                echo "Verifying that the artifact exists"
+                sh "ls -l jarstaging/com/valaxy/demo-workshop/2.1.2/"
+            }
+        }
+        stage ("Test Nexus Connectivity") {
+            steps {
+                sh 'curl -I http://3.110.157.207:8081'
+            }
+        }
+        stage ("Upload to Nexus") {
+            steps {
+                echo "----------- Jar Publish Started -------------"
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'http://3.110.157.207:8081',
+                    groupId: 'com.valaxy',
+                    version: '2.1.2',
+                    repository: 'tweet-trend-maven',
+                    credentialsId: 'nexus-credentials',
+                    artifacts: [
+                        [
+                            artifactId: 'demo-workshop',
+                            classifier: '',
+                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
+                            type: 'jar'
+                        ]
+                    ]
+                )
             }
         }
     }
