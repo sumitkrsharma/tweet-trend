@@ -55,7 +55,7 @@ pipeline {
                     // Define artifact details
                     //pom = readMavenPom file: "pom.xml";
                     //filesByGlob = findFiles(glob: "jarstaging/com/valaxy/demo-workshop/2.1.2/*.{pom.packaging}");
-                    def artifactPath = 'jarstaging/com/valaxy/demo-workshop/2.1.2/*.jar'
+                    def artifactPath = 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar'
                     def artifactVersion = '2.1.2'
                     def artifactGroup = 'com.valaxy'
                     def artifactName = 'demo-workshop'
