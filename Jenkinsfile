@@ -70,7 +70,7 @@ pipeline {
                     credentialsId: CRENDENTIAL_ID,
                     groupId: artifactGroup,
                     nexusUrl: NEXUS_URL,
-                    nexusRepositoryId: NEXUS_REPO,
+                    nexusRepositoryId: NEXUS_MAVEN_REPO,
                     version: artifactVersion
                 }    
                 echo "----------- Jar Publish Complete -----------"
