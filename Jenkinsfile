@@ -62,19 +62,19 @@ pipeline {
         stage ("Upload to Nexus") {
             steps {
                 echo "----------- Jar Publish Started -------------"
-                nexusArtifactUploader (
+                nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: "${env.NEXUS_URL}",
+                    nexusUrl: 'http://3.110.157.207:8081',
                     groupId: 'com.valaxy',
                     version: '2.1.2',
-                    repository: "${NEXUS_MAVEN_REPO}",
-                    credentialsId: "${CRENDENTIAL_ID}",
+                    repository: 'tweet-trend-maven',
+                    credentialsId: 'nexus-credentials',
                     artifact: [
                         [
                             artifactId: 'demo-workshop',
                             classifier: '',
-                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
+                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-' + version + '.jar',
                             type: 'jar'
                         ]
                     ]
