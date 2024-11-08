@@ -74,7 +74,7 @@ pipeline {
                         [
                             artifactId: 'demo-workshop',
                             classifier: '',
-                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-' + version + '.jar',
+                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
                             type: 'jar'
                         ]
                     ]
