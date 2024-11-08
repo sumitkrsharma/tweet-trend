@@ -70,7 +70,7 @@ pipeline {
                     version: '2.1.2',
                     repository: 'tweet-trend-maven',
                     credentialsId: 'nexus-credentials',
-                    artifact: [
+                    artifacts: [
                         [
                             artifactId: 'demo-workshop',
                             classifier: '',
