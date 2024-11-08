@@ -48,6 +48,12 @@ pipeline {
                 }
             }
         }
+        stage ("Verify Build Artifact") {
+            steps {
+                echo "Verifying that the artifact exists"
+                sh "ls -l jarstaging/com/valaxy/demo-workshop/2.1.2/"
+            }
+        }
         stage ("Test Nexus Connectivity") {
             steps {
                 sh 'curl -I http://3.110.157.207:8081'
