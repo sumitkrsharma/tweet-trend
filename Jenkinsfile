@@ -48,34 +48,31 @@ pipeline {
                 }
             }
         }
+        stage ("Test Nexus Connectivity") {
+            steps {
+                sh 'curl -I http://3.110.157.207:8081'
+            }
+        }
         stage ("Upload to Nexus") {
             steps {
                 echo "----------- Jar Publish Started -------------"
-                script {
-                    // Define artifact details
-                    //pom = readMavenPom file: "pom.xml";
-                    //filesByGlob = findFiles(glob: "jarstaging/com/valaxy/demo-workshop/2.1.2/*.{pom.packaging}");
-                    def artifactPath = 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar'
-                    def artifactVersion = '2.1.2'
-                    def artifactGroup = 'com.valaxy'
-                    def artifactName = 'demo-workshop'
-
-                    // upload artifacts to nexus
-                    nexusArtifactUploader artifacts: [
+                nexusArtifactUploader (
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${env.NEXUS_URL}",
+                    groupId: 'com.valaxy',
+                    version: '2.1.2',
+                    repository: "${NEXUS_MAVEN_REPO}",
+                    credentialsId: "${CRENDENTIAL_ID}",
+                    artifact: [
                         [
-                            artifactId: artifactName,
+                            artifactId: 'demo-workshop',
                             classifier: '',
-                            file: artifactPath,
+                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
                             type: 'jar'
                         ]
-                    ],
-                    credentialsId: CRENDENTIAL_ID,
-                    groupId: artifactGroup,
-                    nexusUrl: NEXUS_URL,
-                    repository: NEXUS_MAVEN_REPO,
-                    version: artifactVersion
-                }    
-                echo "----------- Jar Publish Complete -----------"
+                    ]
+                )
             }
         }
     }
