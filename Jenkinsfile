@@ -54,8 +54,8 @@ pipeline {
                 script {
                     // Define artifact details
                     def artifactPath = '**/*.jar'
-                    def artifactVersion = '1.0.0'
-                    def artifactGroup = 'com/valaxy/demo-workshop/'
+                    def artifactVersion = '2.1.2'
+                    def artifactGroup = 'com.valaxy'
                     def artifactName = 'demo-workshop'
 
                     // upload artifacts to nexus
