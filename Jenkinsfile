@@ -53,7 +53,9 @@ pipeline {
                 echo "----------- Jar Publish Started -------------"
                 script {
                     // Define artifact details
-                    def artifactPath = '**/*.jar'
+                    //pom = readMavenPom file: "pom.xml";
+                    //filesByGlob = findFiles(glob: "jarstaging/com/valaxy/demo-workshop/2.1.2/*.{pom.packaging}");
+                    def artifactPath = 'jarstaging/com/valaxy/demo-workshop/2.1.2/*.jar'
                     def artifactVersion = '2.1.2'
                     def artifactGroup = 'com.valaxy'
                     def artifactName = 'demo-workshop'
