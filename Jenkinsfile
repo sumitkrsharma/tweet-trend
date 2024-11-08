@@ -53,7 +53,7 @@ pipeline {
                 echo "----------- Jar Publish Started -------------"
                 script {
                     // Define artifact details
-                    def artifactPath = 'jarstaging/(*)'
+                    def artifactPath = '**/*.jar'
                     def artifactVersion = '1.0.0'
                     def artifactGroup = 'com/valaxy/demo-workshop/'
                     def artifactName = 'demo-workshop'
@@ -70,7 +70,7 @@ pipeline {
                     credentialsId: CRENDENTIAL_ID,
                     groupId: artifactGroup,
                     nexusUrl: NEXUS_URL,
-                    nexusRepositoryId: NEXUS_MAVEN_REPO,
+                    repository: NEXUS_MAVEN_REPO,
                     version: artifactVersion
                 }    
                 echo "----------- Jar Publish Complete -----------"
