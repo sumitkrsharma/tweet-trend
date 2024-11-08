@@ -62,23 +62,27 @@ pipeline {
         stage ("Upload to Nexus") {
             steps {
                 echo "----------- Jar Publish Started -------------"
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: 'http://3.110.157.207:8081',
-                    groupId: 'com.valaxy',
-                    version: '2.1.2',
-                    repository: 'tweet-trend-maven',
-                    credentialsId: 'nexus-credentials',
-                    artifacts: [
-                        [
-                            artifactId: 'demo-workshop',
-                            classifier: '',
-                            file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
-                            type: 'jar'
+                script {
+                    def pom = readMavenPom file: 'pom.xml'
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: 'http://3.110.157.207:8081',
+                        groupId: pom.groupId,
+                        artifactId: pom.artifactId,
+                        version: pom.version,
+                        repository: 'tweet-trend-maven',
+                        credentialsId: 'nexus-credentials',
+                        artifacts: [
+                            [
+                                artifactId: 'demo-workshop',
+                                classifier: '',
+                                file: 'jarstaging/com/valaxy/demo-workshop/2.1.2/demo-workshop-2.1.2.jar',
+                                type: 'jar'
+                            ]
                         ]
-                    ]
-                )
+                    )
+                }
             }
         }
     }
