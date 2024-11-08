@@ -7,6 +7,9 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+        NEXUS_URL = "http://3.110.157.207:8081"
+        NEXUS_MAVEN_REPO = "tweet-trend-maven"
+        CRENDENTIAL_ID = "nexus-credentials"
     }
     stages {
         stage ("Maven Build") {
@@ -46,28 +49,27 @@ pipeline {
                 }
             }
         }
-        stage ("Jar Publish") {
+        stage ("Publish to Nexus") {
             steps {
-                script {
                     echo "----------- Jar Publish Started -------------"
-                    def server = Artifactory.newServer url:registry+"/artifactory" , credentialsId:"jenkins-jfrog-token" 
-                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-                    def uploadSpec = """{
-                        "files": [
-                            {
-                                "pattern": "jarstaging/(*)",
-                                "target": "tweet_trend_dev/{1}",
-                                "flat": "false",
-                                "props": "${properties}",
-                                "exclusions": ["*.sha1", "*.md5"]
-                            }
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "${NEXUS_URL}",
+                        groupId: 'com/valaxy/demo-workshop/',
+                        version: '1.0.0',
+                        repository: "${NEXUS_REPO}",
+                        credentialsId: "${CRENDENTIAL_ID}",
+                        artifats: [
+                            [
+                                artifactId: 'demo-workshop',
+                                classifier: '',
+                                file: 'jarstaging/(*)',
+                                type: 'jar'
+                            ]
                         ]
-                    }"""
-                    def buildInfo = server.upload(uploadSpec)
-                    buildInfo.env.collect()
-                    server.publishBuildInfo(buildInfo)
+                    )
                     echo "----------- Jar Publish Complete -----------"
-                }
             }
         }
     }
