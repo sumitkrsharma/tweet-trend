@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-        NEXUS_URL = "http://3.110.157.207:8081"
+        NEXUS_URL = "http://13.233.141.210:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
         CRENDENTIAL_ID = "nexus-credentials"
     }
@@ -56,7 +56,7 @@ pipeline {
         }
         stage ("Test Nexus Connectivity") {
             steps {
-                sh 'curl -I http://3.110.157.207:8081'
+                sh 'curl -I http://13.233.141.210:8081/'
             }
         }
         stage ("Upload to Nexus") {
