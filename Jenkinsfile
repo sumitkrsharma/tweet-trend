@@ -79,6 +79,18 @@ pipeline {
                         ]
                     ]
                 )
+                echo "----------- Jar Publish Completed -----------"
+            }
+        }
+        def imageName = '13.233.141.210:8081/repository/tweet-trend-docker/tweet-trend'
+        def version = '2.1.2'
+        stage ("Docker build") {
+            steps {
+                script {
+                    echo '<--------------- Docker Build Started --------------->'
+                    app = docker.build(imageName+":"+version)
+                    echo '<--------------- Docker Build Completed --------------->'
+                }
             }
         }
     }
