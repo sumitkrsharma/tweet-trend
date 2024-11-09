@@ -94,7 +94,7 @@ pipeline {
         stage ("Push Docker Image to Nexus") {
             steps {
                 script {
-                    docker.withRegistry(credentialsId: 'nexus-credentials', url: 'http://13.233.141.210:8081/repository/tweet-trend-docker') {
+                    docker.withRegistry(url: 'http://13.233.141.210:8081/repository/tweet-trend-docker', credentialsId: 'nexus-credentials') {
                         app.push()
                     }
                 }
