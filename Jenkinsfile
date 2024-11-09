@@ -86,13 +86,6 @@ pipeline {
                 echo "----------- Jar Publish Completed -----------"
             }
         }
-        stage ("Docker build") {
-            steps {
-                script {
-                    def image = docker.build("${DOCKER_REPO}/${IMAGE_NAME}:${IMAGE_TAG}")
-                }
-            }
-        }
         stage ("Push Docker Image to Nexus") {
             steps {
                 script {
