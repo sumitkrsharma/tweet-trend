@@ -9,6 +9,7 @@ pipeline {
         NEXUS_URL = "http://13.233.141.210:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
         NEXUS_CRENDENTIAL_ID = "nexus-credentials"
+        NEXUS_DOCKER_REGISTRY_URL = "http://13.233.141.210:8081/repository/tweet-trend-docker"
     }
     stages {
         stage ("Maven Build") {
@@ -94,7 +95,7 @@ pipeline {
         stage ("Push Docker Image to Nexus") {
             steps {
                 script {
-                    docker.withRegistry(url: 'http://13.233.141.210:8081/repository/tweet-trend-docker', credentialsId: 'nexus-credentials') {
+                    docker.withRegistry(NEXUS_DOCKER_REGISTRY_URL, NEXUS_CRENDENTIAL_ID) {
                         app.push()
                     }
                 }
