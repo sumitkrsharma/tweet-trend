@@ -8,7 +8,7 @@ pipeline {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
         NEXUS_URL = "http://13.233.141.210:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
-        CRENDENTIAL_ID = "nexus-credentials"
+        NEXUS_CRENDENTIAL_ID = "nexus-credentials"
     }
     stages {
         stage ("Maven Build") {
@@ -57,6 +57,20 @@ pipeline {
         stage ("Test Nexus Connectivity") {
             steps {
                 sh 'curl -I http://13.233.141.210:8081/'
+            }
+        }
+        stage ("check nexus credentials") {
+            steps {
+                script {
+                    withCredentials (
+                        [
+                            usernamePassword(credentialsId: "${env.NEXUS_CRENDENTIAL_ID}",
+                            usernameVariable: 'NEXUS_USER',
+                            passwordVariable: 'NEXUS_PASS'
+                            )
+                        ]
+                    )
+                }
             }
         }
         stage ("Upload to Nexus") {
