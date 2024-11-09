@@ -61,7 +61,7 @@ pipeline {
         }
         stage ("Upload to Nexus") {
             steps {
-                echo "----------- Jar Publish Started -------------"
+                echo "----------- Jar Publish Started -----------"
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
