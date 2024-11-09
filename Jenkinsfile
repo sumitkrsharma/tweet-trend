@@ -59,27 +59,13 @@ pipeline {
                 sh 'curl -I http://13.233.141.210:8081/'
             }
         }
-        stage ("check nexus credentials") {
-            steps {
-                script {
-                    withCredentials (
-                        [
-                            usernamePassword(credentialsId: "${env.NEXUS_CRENDENTIAL_ID}",
-                            usernameVariable: 'NEXUS_USER',
-                            passwordVariable: 'NEXUS_PASS'
-                            )
-                        ]
-                    )
-                }
-            }
-        }
         stage ("Upload to Nexus") {
             steps {
                 echo "----------- Jar Publish Started -----------"
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: 'http://13.233.141.210:8081',
+                    nexusUrl: '13.233.141.210:8081',
                     groupId: 'com.valaxy',
                     version: '2.1.2',
                     repository: 'tweet-trend-maven',
