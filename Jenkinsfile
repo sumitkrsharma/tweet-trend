@@ -9,6 +9,10 @@ pipeline {
         NEXUS_URL = "http://13.233.141.210:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
         NEXUS_CRENDENTIAL_ID = "nexus-credentials"
+        DOCKER_REGISTRY = "http://13.233.141.210:8081/repository/tweet-trend-docker/"
+        DOCKER_REPO = "tweet-trend-docker"
+        IMAGE_NAME = "tweet-trend"
+        IMAGE_TAG = "latest"
     }
     stages {
         stage ("Maven Build") {
@@ -85,11 +89,17 @@ pipeline {
         stage ("Docker build") {
             steps {
                 script {
-                    def imageName = '13.233.141.210:8081/repository/tweet-trend-docker/tweet-trend'
-                    def version = '2.1.2'
-                    echo '<--------------- Docker Build Started --------------->'
-                    app = docker.build(${imageName}+":"+${version})
-                    echo '<--------------- Docker Build Completed --------------->'
+                    def image = docker.build("${DOCKER_REPO}/${IMAGE_NAME}:${IMAGE_TAG}")
+                }
+            }
+        }
+        stage ("Push Docker Image to Nexus") {
+            steps {
+                script {
+                    docker.withRegistry(credentialsId: 'nexus-credentials', url: 'http://13.233.141.210:8081/repository/tweet-trend-docker/') {
+                        def image = docker.build("${DOCKER_REPO}/${IMAGE_NAME}:${IMAGE_TAG}")
+                        image.push()
+                    }
                 }
             }
         }
