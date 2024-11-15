@@ -86,7 +86,7 @@ pipeline {
         stage ("Docker build") {
             steps {
                 script {
-                    def imageName = 'http://13.234.38.224:8081/repository/tweet-trend-docker'
+                    def imageName = '13.234.38.224:8081/repository/tweet-trend-docker'
                     def version = '2.1.2'
                     app = docker.build(imageName+":"+version)
                 }
