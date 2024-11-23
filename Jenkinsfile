@@ -6,10 +6,10 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-        NEXUS_URL = "http://13.234.38.224:8081/"
+        NEXUS_URL = "http://3.110.216.21:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
         NEXUS_CRENDENTIAL_ID = "nexus-credentials"
-        NEXUS_DOCKER_REGISTRY_URL = "http://13.234.38.224:8081/repository/tweet-trend-docker"
+        NEXUS_DOCKER_REGISTRY_URL = "http://3.110.216.21:8081/repository/tweet-trend-docker"
     }
     stages {
         stage ("Maven Build") {
@@ -57,7 +57,7 @@ pipeline {
         }
         stage ("Test Nexus Connectivity") {
             steps {
-                sh 'curl -I http://13.234.38.224:8081/'
+                sh 'curl -I http://3.110.216.21:8081/'
             }
         }
         stage ("Upload to Nexus") {
@@ -66,7 +66,7 @@ pipeline {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: '13.234.38.224:8081',
+                    nexusUrl: '3.110.216.21:8081',
                     groupId: 'com.valaxy',
                     version: '2.1.2',
                     repository: 'tweet-trend-maven',
@@ -86,7 +86,7 @@ pipeline {
         stage ("Docker build") {
             steps {
                 script {
-                    def imageName = '13.234.38.224:8081/repository/tweet-trend-docker'
+                    def imageName = '3.110.216.21:8081/repository/tweet-trend-docker'
                     def version = '2.1.2'
                     app = docker.build(imageName+":"+version)
                 }
