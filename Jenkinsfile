@@ -88,6 +88,10 @@ pipeline {
                 script {
                     def imageName = '3.110.216.21:8081/repository/tweet-trend-docker'
                     def version = '2.1.2'
+                    sh """
+                        mkdir -p ~/.docker
+                        echo '{ "insecure-registries": ["3.110.216.21:8081"] }' > ~/.docker/config.json
+                    """
                     app = docker.build(imageName+":"+version)
                 }
             }
