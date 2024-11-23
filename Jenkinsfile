@@ -96,7 +96,7 @@ pipeline {
                 }
             }
         }
-        stage ("Push Docker Image to Nexus") {
+        stage ("Push Docker Image To Nexus") {
             steps {
                 script {
                     docker.withRegistry(NEXUS_DOCKER_REGISTRY_URL, NEXUS_CRENDENTIAL_ID) {
