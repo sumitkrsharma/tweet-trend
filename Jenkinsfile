@@ -86,11 +86,11 @@ pipeline {
         stage ("Docker build") {
             steps {
                 script {
-                    def imageName = '3.110.216.21:8081/repository/tweet-trend-docker'
+                    def imageName = '3.110.216.21:8082/repository/tweet-trend-docker'
                     def version = '2.1.2'
                     sh """
                         mkdir -p ~/.docker
-                        echo '{ "insecure-registries": ["3.110.216.21:8081"] }' > ~/.docker/config.json
+                        echo '{ "insecure-registries": ["3.110.216.21:8082"] }' > ~/.docker/config.json
                     """
                     app = docker.build(imageName+":"+version)
                 }
