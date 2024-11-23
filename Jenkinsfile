@@ -85,6 +85,7 @@ pipeline {
         }
         stage ("Docker build") {
             steps {
+	    	echo "----------- Docker Build Started -----------"
                 script {
                     def imageName = '3.110.216.21:8082/repository/tweet-trend-docker'
                     def version = '2.1.2'
@@ -94,15 +95,18 @@ pipeline {
                     """
                     app = docker.build(imageName+":"+version)
                 }
+		echo "----------- Docker Build Completed -----------"
             }
         }
         stage ("Push Docker Image to Nexus") {
             steps {
+	    	echo "----------- Docker Image Push Started to Nexus -----------"
                 script {
                     docker.withRegistry(NEXUS_DOCKER_REGISTRY_URL, NEXUS_CRENDENTIAL_ID) {
                         app.push()
                     }
                 }
+		echo "----------- Docker Image Push Completed to Nexus -----------"
             }
         }
     }
