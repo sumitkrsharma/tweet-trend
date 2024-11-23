@@ -9,7 +9,7 @@ pipeline {
         NEXUS_URL = "http://3.110.216.21:8081/"
         NEXUS_MAVEN_REPO = "tweet-trend-maven"
         NEXUS_CRENDENTIAL_ID = "nexus-credentials"
-        NEXUS_DOCKER_REGISTRY_URL = "http://3.110.216.21:8081/repository/tweet-trend-docker"
+        NEXUS_DOCKER_REGISTRY_URL = "http://3.110.216.21:8082/repository/tweet-trend-docker"
     }
     stages {
         stage ("Maven Build") {
